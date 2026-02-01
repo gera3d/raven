@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 import process from "node:process";
 
-declare const __OPENCLAW_VERSION__: string | undefined;
+declare const __RAVEN_VERSION__: string | undefined;
 
 const BUNDLED_VERSION =
-  (typeof __OPENCLAW_VERSION__ === "string" && __OPENCLAW_VERSION__) ||
+  (typeof __RAVEN_VERSION__ === "string" && __RAVEN_VERSION__) ||
   process.env.OPENCLAW_BUNDLED_VERSION ||
   "0.0.0";
 

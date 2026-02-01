@@ -47,7 +47,7 @@ export function registerCompletionCli(program: Command) {
     });
 }
 
-export async function installCompletion(shell: string, yes: boolean, binName = "openclaw") {
+export async function installCompletion(shell: string, yes: boolean, binName = "raven") {
   const home = process.env.HOME || os.homedir();
   let profilePath = "";
   let sourceLine = "";
@@ -99,7 +99,7 @@ export async function installCompletion(shell: string, yes: boolean, binName = "
       console.log(`Installing completion to ${profilePath}...`);
     }
 
-    await fs.appendFile(profilePath, `\n# OpenClaw Completion\n${sourceLine}\n`);
+    await fs.appendFile(profilePath, `\n# Raven Completion\n${sourceLine}\n`);
     console.log(`Completion installed. Restart your shell or run: source ${profilePath}`);
   } catch (err) {
     console.error(`Failed to install completion: ${err as string}`);

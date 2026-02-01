@@ -5,7 +5,7 @@ import { isTruthyEnvValue } from "./env.js";
 
 import { resolveBrewPathDirs } from "./brew.js";
 
-type EnsureOpenClawPathOpts = {
+type EnsureRavenPathOpts = {
   execPath?: string;
   cwd?: string;
   homeDir?: string;
@@ -48,7 +48,7 @@ function mergePath(params: { existing: string; prepend: string[] }): string {
   return merged.join(path.delimiter);
 }
 
-function candidateBinDirs(opts: EnsureOpenClawPathOpts): string[] {
+function candidateBinDirs(opts: EnsureRavenPathOpts): string[] {
   const execPath = opts.execPath ?? process.execPath;
   const cwd = opts.cwd ?? process.cwd();
   const homeDir = opts.homeDir ?? os.homedir();
@@ -56,21 +56,26 @@ function candidateBinDirs(opts: EnsureOpenClawPathOpts): string[] {
 
   const candidates: string[] = [];
 
-  // Bundled macOS app: `openclaw` lives next to the executable (process.execPath).
+  // Bundled macOS app: `raven` lives next to the executable (process.execPath).
   try {
     const execDir = path.dirname(execPath);
-    const siblingCli = path.join(execDir, "openclaw");
-    if (isExecutable(siblingCli)) {
+    // Check for raven first, then legacy openclaw
+    const siblingCli = path.join(execDir, "raven");
+    const legacyCli = path.join(execDir, "openclaw");
+    if (isExecutable(siblingCli) || isExecutable(legacyCli)) {
       candidates.push(execDir);
     }
   } catch {
     // ignore
   }
 
-  // Project-local installs (best effort): if a `node_modules/.bin/openclaw` exists near cwd,
+  // Project-local installs (best effort): if a `node_modules/.bin/raven` exists near cwd,
   // include it. This helps when running under launchd or other minimal PATH environments.
   const localBinDir = path.join(cwd, "node_modules", ".bin");
-  if (isExecutable(path.join(localBinDir, "openclaw"))) {
+  if (
+    isExecutable(path.join(localBinDir, "raven")) ||
+    isExecutable(path.join(localBinDir, "openclaw"))
+  ) {
     candidates.push(localBinDir);
   }
 
@@ -99,14 +104,17 @@ function candidateBinDirs(opts: EnsureOpenClawPathOpts): string[] {
 }
 
 /**
- * Best-effort PATH bootstrap so skills that require the `openclaw` CLI can run
+ * Best-effort PATH bootstrap so skills that require the `raven` CLI can run
  * under launchd/minimal environments (and inside the macOS app bundle).
  */
-export function ensureOpenClawCliOnPath(opts: EnsureOpenClawPathOpts = {}) {
-  if (isTruthyEnvValue(process.env.OPENCLAW_PATH_BOOTSTRAPPED)) {
+export function ensureRavenCliOnPath(opts: EnsureRavenPathOpts = {}) {
+  if (
+    isTruthyEnvValue(process.env.RAVEN_PATH_BOOTSTRAPPED) ||
+    isTruthyEnvValue(process.env.OPENCLAW_PATH_BOOTSTRAPPED)
+  ) {
     return;
   }
-  process.env.OPENCLAW_PATH_BOOTSTRAPPED = "1";
+  process.env.RAVEN_PATH_BOOTSTRAPPED = "1";
 
   const existing = opts.pathEnv ?? process.env.PATH ?? "";
   const prepend = candidateBinDirs(opts);
@@ -119,3 +127,6 @@ export function ensureOpenClawCliOnPath(opts: EnsureOpenClawPathOpts = {}) {
     process.env.PATH = merged;
   }
 }
+
+// Legacy alias for backward compatibility
+export const ensureOpenClawCliOnPath = ensureRavenCliOnPath;
