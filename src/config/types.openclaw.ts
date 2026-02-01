@@ -23,6 +23,7 @@ import type { NodeHostConfig } from "./types.node-host.js";
 import type { PluginsConfig } from "./types.plugins.js";
 import type { SkillsConfig } from "./types.skills.js";
 import type { ToolsConfig } from "./types.tools.js";
+import type { UiConfig } from "./types.theme.js";
 
 export type OpenClawConfig = {
   meta?: {
@@ -64,16 +65,7 @@ export type OpenClawConfig = {
     checkOnStart?: boolean;
   };
   browser?: BrowserConfig;
-  ui?: {
-    /** Accent color for OpenClaw UI chrome (hex). */
-    seamColor?: string;
-    assistant?: {
-      /** Assistant display name for UI surfaces. */
-      name?: string;
-      /** Assistant avatar (emoji, short text, or image URL/data URI). */
-      avatar?: string;
-    };
-  };
+  ui?: UiConfig;
   skills?: SkillsConfig;
   plugins?: PluginsConfig;
   models?: ModelsConfig;

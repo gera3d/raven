@@ -1,1 +1,51 @@
+# Line endings
 * text=auto eol=lf
+
+# =============================================================================
+# RAVEN BRANDING PROTECTION
+# =============================================================================
+# These files contain Raven-specific branding and should ALWAYS keep our version
+# when merging from upstream (openclaw/openclaw).
+#
+# The 'ours-branding' merge driver is configured by scripts/sync-upstream.sh
+# to automatically resolve conflicts by keeping the local (Raven) version.
+# =============================================================================
+
+# Core identity files - always keep ours
+package.json merge=ours-branding
+raven.mjs merge=ours-branding
+
+# CLI branding
+src/cli/banner.ts merge=ours-branding
+src/cli/tagline.ts merge=ours-branding
+src/cli/cli-name.ts merge=ours-branding
+src/entry.ts merge=ours-branding
+
+# Configuration paths and naming
+src/config/paths.ts merge=ours-branding
+src/daemon/constants.ts merge=ours-branding
+
+# Control UI branding
+ui/src/ui/assistant-identity.ts merge=ours-branding
+ui/src/ui/app.ts merge=ours-branding
+ui/src/styles/base.css merge=ours-branding
+
+# =============================================================================
+# SEMI-PROTECTED FILES
+# =============================================================================
+# These files may have both branding AND functional changes upstream.
+# Mark as 'ours-review' to force manual review during merge.
+# =============================================================================
+
+# Type definitions may add new fields - review carefully
+src/config/types.openclaw.ts merge=ours-review
+
+# Gateway server discovery has branding in Bonjour names
+src/gateway/server-discovery.ts merge=ours-review
+src/infra/bonjour.ts merge=ours-review
+
+# Path utilities have both branding and functional code
+src/infra/path-env.ts merge=ours-review
+
+# Version file has branding but may have bundling changes
+src/version.ts merge=ours-review
