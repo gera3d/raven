@@ -1,12 +1,12 @@
 {
-  "name": "openclaw",
+  "name": "raven",
   "version": "2026.1.30",
-  "description": "WhatsApp gateway CLI (Baileys web) with Pi RPC agent",
-  "keywords": [],
+  "description": "Multi-platform messaging agent - your messages take flight",
+  "keywords": ["messaging", "agent", "whatsapp", "telegram", "automation"],
   "license": "MIT",
-  "author": "",
+  "author": "gera3d",
   "bin": {
-    "openclaw": "openclaw.mjs"
+    "raven": "raven.mjs"
   },
   "files": [
     "dist/acp/**",
@@ -78,7 +78,7 @@
     ".": "./dist/index.js",
     "./plugin-sdk": "./dist/plugin-sdk/index.js",
     "./plugin-sdk/*": "./dist/plugin-sdk/*",
-    "./cli-entry": "./openclaw.mjs"
+    "./cli-entry": "./raven.mjs"
   },
   "scripts": {
     "android:assemble": "cd apps/android && ./gradlew :app:assembleDebug",
