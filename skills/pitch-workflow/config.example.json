@@ -1,0 +1,63 @@
+{
+  "$schema": "https://raven.ai/schemas/config.json",
+  "$comment": "Example configuration for Raven Audio Pitch Suite",
+
+  "messages": {
+    "tts": {
+      "provider": "elevenlabs",
+      "voice": "rachel",
+      "model": "eleven_multilingual_v2",
+      "stability": 0.6,
+      "similarityBoost": 0.8,
+      "style": 0.4,
+      "speakerBoost": true
+    }
+  },
+
+  "skills": {
+    "entries": {
+      "pitch-writer": {
+        "enabled": true,
+        "config": {
+          "defaultDuration": "60s",
+          "defaultTone": "professional",
+          "defaultAudience": "general"
+        }
+      },
+
+      "voice-pitch": {
+        "enabled": true,
+        "env": {
+          "ELEVENLABS_API_KEY": "your-api-key-here"
+        },
+        "config": {
+          "defaultVoice": "rachel",
+          "defaultProvider": "elevenlabs",
+          "outputFormat": "mp3",
+          "outputDir": "~/Documents/Pitches/Audio"
+        }
+      },
+
+      "pitch-workflow": {
+        "enabled": true,
+        "env": {
+          "ELEVENLABS_API_KEY": "your-api-key-here"
+        },
+        "config": {
+          "defaultDuration": "60s",
+          "defaultVoice": "rachel",
+          "defaultProvider": "elevenlabs",
+          "defaultPreset": "product",
+          "outputDir": "~/Documents/Pitches",
+          "saveScript": true,
+          "saveMetadata": true
+        }
+      }
+    }
+  },
+
+  "env": {
+    "ELEVENLABS_API_KEY": "your-elevenlabs-api-key",
+    "OPENAI_API_KEY": "your-openai-api-key"
+  }
+}
