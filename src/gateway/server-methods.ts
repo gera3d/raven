@@ -10,6 +10,7 @@ import { connectHandlers } from "./server-methods/connect.js";
 import { cronHandlers } from "./server-methods/cron.js";
 import { deviceHandlers } from "./server-methods/devices.js";
 import { execApprovalsHandlers } from "./server-methods/exec-approvals.js";
+import { fleetHandlers } from "./server-methods/fleet.js";
 import { healthHandlers } from "./server-methods/health.js";
 import { logsHandlers } from "./server-methods/logs.js";
 import { modelsHandlers } from "./server-methods/models.js";
@@ -72,6 +73,9 @@ const READ_METHODS = new Set([
   "node.list",
   "node.describe",
   "chat.history",
+  "fleet.list",
+  "fleet.get",
+  "fleet.status",
 ]);
 const WRITE_METHODS = new Set([
   "send",
@@ -169,6 +173,7 @@ export const coreGatewayHandlers: GatewayRequestHandlers = {
   ...cronHandlers,
   ...deviceHandlers,
   ...execApprovalsHandlers,
+  ...fleetHandlers,
   ...webHandlers,
   ...modelsHandlers,
   ...configHandlers,

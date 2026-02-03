@@ -153,6 +153,14 @@ const entries: SubCliEntry[] = [
     },
   },
   {
+    name: "fleet",
+    description: "Fleet management commands",
+    register: async (program) => {
+      const mod = await import("../fleet-cli.js");
+      mod.registerFleetCli(program);
+    },
+  },
+  {
     name: "hooks",
     description: "Hooks tooling",
     register: async (program) => {
